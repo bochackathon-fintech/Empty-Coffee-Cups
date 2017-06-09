@@ -48,9 +48,16 @@ app.delete("/customer/:id", function(req, res, next){
 	res.json();
 });
 
-app.get("/customers/:id", function(req, res, next){
-	// Put your business logic here
-	res.json();
+app.get("/customer/:id", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+	cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+		var doc = body.rows.map(function(row) {
+			if (row.doc != null){
+	    	return row.doc;
+			}
+	  })
+	res.json(doc);
+   })
 });
 
 app.get("/customer/:id/goals", function(req, res, next){
