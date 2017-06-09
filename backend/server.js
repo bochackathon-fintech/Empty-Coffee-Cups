@@ -24,15 +24,19 @@ app.use("/explorer", express.static("./public/swagger-ui"));
 
 // Business logic
 app.get("/customers", function(req, res, next){
-	/*	Put your business logic here, e.g.*/
-	cloudantDb.list(function(err, body){
+	var responseData    = [];
+
+	cloudantDb.view("customers","customers",function(err, body){
 		if (!err){
 			body.rows.forEach(function(doc){
-				console.log(doc);
+				responseData.push(doc);
 			});
+			res.json(responseData);
+		}else{
+			console.log("Failed to connect to database.");
 		}
 	});
-	res.json();
+
 });
 
 app.post("/customers", function(req, res, next){
