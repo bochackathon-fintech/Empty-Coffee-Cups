@@ -21,11 +21,11 @@
 			        </button>
 			        <div class="container">
 			            <div class="row">
-			                <div class="col-xs-6">
+			                <div class="col-xs-12 col-sm-6 border-right">
 			                	<h2>Spending By Category</h2>
 								<div id="donutchart"></div>
 			                </div>
-			                <div class="col-xs-6">
+			                <div class="col-xs-12 col-sm-6">
 			                	<div class="row">
 			               			<div class="col-xs-12">
 					                	<h2>Budgets</h2>
@@ -37,39 +37,47 @@
 									</div>
 								</div>
 			                	<div class="row">
-			               			<div class="col-xs-12">
+			               			<div class="col-xs-12 border-top">
 					                	<h2>Accounts</h2>
-					                	<ul class="list-group accountsList">
-										  <li class="list-group-item">Cash</li>
-										  <li class="list-group-item">Loan</li>
-										  <li class="list-group-item">Credit</li>
-										  <li class="list-group-item">Saving</li>
-										  <li class="list-group-item">Innvestement</li>
-										  <li class="list-group-item">Property</li>
-										</ul>
+					                	<div class="accountsList">
+					                		<div class="account-group">
+					                			<span class="accuont-title">Credit</span>
+					                			<span class="accuont-amount">10,000</span>
+					                		</div>
+					                		<div class="account-group">
+					                			<span class="accuont-title">Savings</span>
+					                			<span class="accuont-amount">10,000</span>
+					                		</div>
+					                		<div class="account-group">
+					                			<span class="accuont-title">Loan</span>
+					                			<span class="accuont-amount">10,000</span>
+					                		</div>
+					                	</div>
 									</div>
 								</div>
 			                </div>
 			            </div>
 			            <div class="row">
-			                <div class="col-xs-6">
+			                <div class="col-xs-12 col-sm-6 border-right border-top">
 			                	<h2>Performance</h2>
 								<div id="chart_div"></div>
 			                </div>
-			                <div class="col-xs-6">
+			                <div class="col-xs-12 col-sm-6">
 			                	<div class="row">
-					                <div class="col-xs-12">
+					                <div class="col-xs-12 border-top">
 					                	<h2>Activities</h2>
-					                	<div class="alert alert-info" role="alert">
-											<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 7 Accounts need your attention
-										</div>
-					                	<div class="alert alert-warning" role="alert">
-											<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent 123123. Usually you spend 100
+					                	<div class="activities-alerts">
+						                	<div class="alert alert-info" role="alert">
+												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 7 Accounts need your attention
+											</div>
+						                	<div class="alert alert-warning" role="alert">
+												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent 123123. Usually you spend 100
+											</div>
 										</div>
 					                </div>
 								</div>
 			                	<div class="row">
-					                <div class="col-xs-12">
+					                <div class="col-xs-12 border-top">
 					                	<h2>Top Spending Categories</h2>
 					                	<div class="spendings-block"><i class="fa fa-suitcase" aria-hidden="true"></i></div>
 					                	<div class="spendings-block"><i class="fa fa-car" aria-hidden="true"></i></div>
@@ -108,6 +116,18 @@
 					colors:['#c00','blue','green','orange','magenta']
 				};
 				var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+
+				// The select handler. Call the chart's getSelection() method
+				function selectHandler() {
+					var selectedItem = chart.getSelection()[0];
+					if (selectedItem) {
+						console.log(selectedItem);
+						var value = data.getValue(selectedItem.row, 0);
+						console.log('The user selected ' + value);
+					}
+				}
+  				google.visualization.events.addListener(chart, 'select', selectHandler);
+
 				chart.draw(data, options);
 			}
 			/* bar chart */
