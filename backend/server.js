@@ -72,12 +72,27 @@ app.get("/customer/:id/goals", function(req, res, next){
    })
 });
 
-app.post("/customers/:id/goals", function(req, res, next){
+app.post("/customer/:id/goals", function(req, res, next){
 	// Put your business logic here
+	console.log(req.query);
+
+  mid = req.query.id;
+	mvalue = req.query.value;
+  msaved = req.query.saved;
+  mdate = req.query.date;
+  maccountid = req.query.accountid;
+  mpriority = req.query.priority;
+
+	alice.insert({ id: mid, goals: [m:] }, function(err, body) {
+	  if (!err)
+	    console.log(body)
+	})
+
+
 	res.json();
 });
 
-app.delete("/customers/:id/goals", function(req, res, next){
+app.delete("/customer/:id/goals", function(req, res, next){
 	// Put your business logic here
 	res.json();
 });

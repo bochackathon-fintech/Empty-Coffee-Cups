@@ -76,7 +76,13 @@ paths:
       description: Add new Goal using customer id
       parameters:
         - $ref: '#/parameters/idParam'
-        - $ref: '#/parameters/nameGoalParam'
+        - $ref: '#/parameters/valueGoalParam'
+        - $ref: '#/parameters/SavedGoalParam'
+        - $ref: '#/parameters/dateGoalParam'
+        - $ref: '#/parameters/accountGoalParam'
+        - $ref: '#/parameters/priorityGoalParam'
+
+
       responses:
         200:
           $ref: '#/responses/getGoalsCustomer'
@@ -182,3 +188,38 @@ parameters:
     description: Goal Name
     required: true
     type: string
+
+  valueGoalParam:
+    name: value
+    in: query
+    description: Value number
+    required: true
+    type: integer
+
+  SavedGoalParam:
+    name: saved
+    in: query
+    description: Saved money until now
+    required: true
+    type: integer
+
+  dateGoalParam:
+    name: date
+    in: query
+    description: Deadline
+    required: true
+    type: string
+
+  accountGoalParam:
+    name: accountid
+    in: query
+    description: Account id
+    required: true
+    type: string
+
+  priorityGoalParam:
+    name: priority
+    in: query
+    description: Priority
+    required: true
+    type: integer
