@@ -2,9 +2,12 @@
 	include_once("manager/functions.php");
 ?>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo pageTitle(); ?></title>
 	<!-- jquery -->
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
+    <!--Load the AJAX API CHARTS-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- custom includes -->
 	<script src="assets/js/custom.js"></script>
 	<!-- Latest compiled and minified CSS -->
