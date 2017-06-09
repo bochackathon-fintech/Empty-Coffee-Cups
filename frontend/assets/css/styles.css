@@ -1,0 +1,38 @@
+body, html {
+	font-family: 'Open Sans';
+}
+.appTitle {
+	color: #329999;
+}
+/* login form */
+.login-form {
+	max-width: 250px;
+	width: 100%;
+	margin: auto;
+}
+#forgotPassword {
+	display: block;
+	width: 100%;
+	text-align: right;
+}
+.login-form p {
+	text-align: center;
+	margin: 0;
+}
+.signin-but, .google-but, .yahoo-but {
+	width: 100%;
+	text-align: center;
+	border:	none;
+	border-radius: 0;
+	padding: 4px;
+	margin-bottom: 3px;
+}
+.signin-but {
+	background-color: #329999;
+}
+.google-but {
+	background: #cc0000;
+}
+.yahoo-but {
+	background: #5424ad;
+}
