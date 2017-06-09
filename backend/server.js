@@ -16,16 +16,15 @@ require('appmetrics-dash').attach();
 
 // Cloudant instrumentation
 var cloudant = Cloudant(appEnv.services['cloudantNoSQLDB'][0].credentials);
-var cloudantDb = cloudant.db.use("mydb");
+var cloudantDb = cloudant.db.use("clients");
 
 // Swagger instrumentation
 app.use("/swagger/api", express.static("./public/swagger.yaml"));
 app.use("/explorer", express.static("./public/swagger-ui"));
 
 // Business logic
-app.get("/products", function(req, res, next){
-	/*
-	Put your business logic here, e.g.
+app.get("/customers", function(req, res, next){
+	/*	Put your business logic here, e.g.*/
 	cloudantDb.list(function(err, body){
 		if (!err){
 			body.rows.forEach(function(doc){
@@ -33,29 +32,36 @@ app.get("/products", function(req, res, next){
 			});
 		}
 	});
-	*/
 	res.json();
 });
 
-app.post("/products", function(req, res, next){
+app.post("/customers", function(req, res, next){
 	// Put your business logic here
 	res.json();
 });
 
-app.get("/product/:id", function(req, res, next){
+
+
+app.delete("/customer/:id", function(req, res, next){
 	// Put your business logic here
 	res.json();
 });
 
-app.put("/product/:id", function(req, res, next){
+app.get("/customers/:id", function(req, res, next){
 	// Put your business logic here
 	res.json();
 });
 
-app.delete("/product/:id", function(req, res, next){
+app.get("/customer/:id/goals", function(req, res, next){
 	// Put your business logic here
 	res.json();
 });
+
+app.post("/customers/:id/goals", function(req, res, next){
+	// Put your business logic here
+	res.json();
+});
+
 
 
 // Starting the server
