@@ -2,7 +2,7 @@ swagger: '2.0'
 
 info:
   version: "0.0.1"
-  title: Products API
+  title: Bank Customers
 
 consumes:
   - text/plain
@@ -11,102 +11,135 @@ produces:
   - application/json
 
 paths:
-  /products:
+  /customers:
     get:
       tags:
-        - products
+        - customers
       operationId: getAll
-      description: Get all products
+      description: Get all customers
       responses:
         200:
-          $ref: '#/responses/getAllProducts'
+          $ref: '#/responses/getAllCustomers'
     post:
       tags:
-        - products
+        - customers
       operationId: add
-      description: Add new product
+      description: Add new Customer
       parameters:
-        - $ref: '#/parameters/productNameParam'
+        - $ref: '#/parameters/CustomerNameParam'
       responses:
         200:
-          $ref: '#/responses/getOneProduct'
+          $ref: '#/responses/getOneCustomer'
 
-  /product/{id}:
+  /customer/{id}:
     get:
       tags:
-        - products
+        - customers
       operationId: get
-      description: Get product by ID
+      description: Get customer by ID
       parameters:
         - $ref: '#/parameters/idParam'
       responses:
         200:
-          $ref: '#/responses/getOneProduct'
+          $ref: '#/responses/getOneCustomer'
+
 
     delete:
       tags:
-        - products
+        - customers
       operationId: delete
-      description: Delete product by ID
+      description: Delete customer by ID
       parameters:
         - $ref: '#/parameters/idParam'
       responses:
         200:
-          $ref: '#/responses/getOneProduct'
+          $ref: '#/responses/getOneCustomer'
 
     put:
       tags:
-        - products
+        - customers
       operationId: update
-      description: Update product by ID
+      description: Update customer by ID
       parameters:
         - $ref: '#/parameters/idParam'
-        - $ref: '#/parameters/productNameParam'
+        - $ref: '#/parameters/CustomerNameParam'
       responses:
         200:
-          $ref: '#/responses/getOneProduct'
+          $ref: '#/responses/getOneCustomer'
 
 
 definitions:
-  product:
+
+  goal:
     type: object
-    description: A product object
+    description: A goal object
     required:
-      - id
+      - value
       - name
+      - date
+      - priority
+      - accountid
+
     properties:
-      id:
+      value:
         type: integer
-        format: int64
+      saved:
+        type: integer
       name:
         type: string
+      date:
+        type: string
+      priority:
+        type: integer
+      accountid:
+        type: string
+
+  customer:
+    type: object
+    description: A customer object
+    required:
+      - _id
+      - _rev
+      - birth
+      - registrationdate
+      - expectedincome
+    properties:
+      _id:
+        type: integer
+        format: int64
+      _rev:
+        type: integer
+        format: int64
+      birth:
+        type: string
+      registrationdate:
+        type: string
+      expectedincome:
+        type: integer
+      goals:
+        type: array
+        items:
+          $ref: '#/definitions/goal'
+
 
 responses:
-  getOneProduct:
-    description: One product
+  getOneCustomer:
+    description: One customer
     schema:
-      $ref: '#/definitions/product'
+      $ref: '#/definitions/customer'
 
-  getAllProducts:
-    description: List of all products
+  getAllCustomers:
+    description: List of all customers
     schema:
       type: array
       items:
-        $ref: '#/definitions/product'
+        $ref: '#/definitions/customer'
 
 parameters:
   idParam:
     name: id
     in: path
-    description: Product ID
+    description: Customer ID
     required: true
     type: integer
     format: int64
-
-  productNameParam:
-    name: productName
-    in: body
-    description: Product name
-    required: true
-    schema:
-      type: string
