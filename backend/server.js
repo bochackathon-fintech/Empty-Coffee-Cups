@@ -73,23 +73,37 @@ app.get("/customer/:id/goals", function(req, res, next){
 });
 
 app.post("/customer/:id/goals", function(req, res, next){
-	// Put your business logic here
-	console.log(req.query);
-
-  mid = req.query.id;
-	mvalue = req.query.value;
-  msaved = req.query.saved;
-  mdate = req.query.date;
-  maccountid = req.query.accountid;
-  mpriority = req.query.priority;
-
-	alice.insert({ id: mid, goals: [m:] }, function(err, body) {
-	  if (!err)
-	    console.log(body)
-	})
 
 
-	res.json();
+    var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+    cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+        var doc = body.rows.map(function(row) {
+            if (row.doc != null){
+                return row.doc;
+            }
+        })
+        doc = doc[0];
+
+        doc.goals.push({
+            "id":  req.query.id,
+            "value":  req.query.value,
+            "saved":  req.query.saved,
+            "date":  req.query.date,
+            "accountid":  req.query.accountid,
+            "priority":  req.query.priority}
+            )
+
+            cloudantDb.insert(doc, function (er, result) {
+                if (er) {
+                    throw er;
+                }
+            });
+
+
+    });
+
+
+    res.json();
 });
 
 app.delete("/customer/:id/goals", function(req, res, next){
