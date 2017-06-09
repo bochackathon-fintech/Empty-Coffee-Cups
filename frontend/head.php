@@ -17,6 +17,8 @@
 	<!-- google fonts! -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+	<!-- font awesome -->
+	<link rel="stylesheet" href="assets/css/font-awesome/css/font-awesome.min.css">
 	<!-- custom includes -->
 	<link href="assets/css/styles.css" rel="stylesheet">
 </head>

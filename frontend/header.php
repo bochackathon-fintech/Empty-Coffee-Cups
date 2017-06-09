@@ -32,7 +32,7 @@
             <li>
                 <a href="#">Reports</a>
             </li>
-            <li class="smaller-sidebar">
+            <li class="smaller-sidebar first">
 		    	<a href="#">Settings</a>
             </li>
             <li class="smaller-sidebar">
@@ -41,7 +41,6 @@
             <li class="smaller-sidebar">
 		    	<a href="#">Mobile & Alerts</a>
             </li>
-
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
