@@ -22,10 +22,9 @@ var cloudantDb = cloudant.db.use("clients");
 app.use("/swagger/api", express.static("./public/swagger.yaml"));
 app.use("/explorer", express.static("./public/swagger-ui"));
 
-// Business logic
+
 app.get("/customers", function(req, res, next){
 	var responseData    = [];
-
 	cloudantDb.view("customers","customers",function(err, body){
 		if (!err){
 			body.rows.forEach(function(doc){
@@ -44,8 +43,6 @@ app.post("/customers", function(req, res, next){
 	res.json();
 });
 
-
-
 app.delete("/customer/:id", function(req, res, next){
 	// Put your business logic here
 	res.json();
@@ -57,8 +54,15 @@ app.get("/customers/:id", function(req, res, next){
 });
 
 app.get("/customer/:id/goals", function(req, res, next){
-	// Put your business logic here
-	res.json();
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+	cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+		var goals = body.rows.map(function(row) {
+			if (row.doc != null){
+	    	return row.doc.goals;
+			}
+	  })
+	res.json(goals);
+   })
 });
 
 app.post("/customers/:id/goals", function(req, res, next){
