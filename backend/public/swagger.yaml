@@ -75,9 +75,21 @@ paths:
       operationId: add
       description: Add new Goal using customer id
       parameters:
-        - $ref: '#/parameters/getGoalsCustomer'
+        - $ref: '#/parameters/idParam'
+        - $ref: '#/parameters/nameGoalParam'
       responses:
         200:
+          $ref: '#/responses/getGoalsCustomer'
+
+
+    delete:
+      tags:
+        - goals
+      operationId: delete
+      description: Delete a goal using customer id and name
+      parameters:
+        - $ref: '#/parameters/nameGoalParam'
+      responses:
           $ref: '#/responses/getGoalsCustomer'
 
 
@@ -163,3 +175,10 @@ parameters:
     required: true
     type: integer
     format: int64
+
+  nameGoalParam:
+    name: name
+    in: query
+    description: Goal Name
+    required: true
+    type: string

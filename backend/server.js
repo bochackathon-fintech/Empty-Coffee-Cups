@@ -62,6 +62,10 @@ app.post("/customers/:id/goals", function(req, res, next){
 	res.json();
 });
 
+app.delete("/customers/:id/goals", function(req, res, next){
+	// Put your business logic here
+	res.json();
+});
 
 
 // Starting the server
