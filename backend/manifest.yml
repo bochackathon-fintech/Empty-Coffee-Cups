@@ -1,0 +1,15 @@
+---
+applications:
+- disk_quota: 1024M
+  name: testbe
+  domain: mybluemix.net
+  host: hackathon-be
+  memory: 256M
+  instances: 1
+  timeout: 180
+  buildpack: sdk-for-nodejs
+  command: npm start
+  services:
+    - Cloudant NoSQL DB-h1
+  env:
+    OPENAPI_SPEC: /swagger/api
