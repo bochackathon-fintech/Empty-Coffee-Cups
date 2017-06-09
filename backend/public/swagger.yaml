@@ -44,6 +44,7 @@ paths:
           $ref: '#/responses/getOneCustomer'
 
 
+
     delete:
       tags:
         - customers
@@ -55,17 +56,30 @@ paths:
         200:
           $ref: '#/responses/getOneCustomer'
 
-    put:
+
+  /customer/{id}/goals:
+    get:
       tags:
-        - customers
-      operationId: update
-      description: Update customer by ID
+        - goals
+      operationId: get
+      description: Get goals using customer ID
       parameters:
         - $ref: '#/parameters/idParam'
-        - $ref: '#/parameters/CustomerNameParam'
       responses:
         200:
-          $ref: '#/responses/getOneCustomer'
+          $ref: '#/responses/getGoalsCustomer'
+
+    post:
+      tags:
+        - goals
+      operationId: add
+      description: Add new Goal using customer id
+      parameters:
+        - $ref: '#/parameters/getGoalsCustomer'
+      responses:
+        200:
+          $ref: '#/responses/getGoalsCustomer'
+
 
 
 definitions:
@@ -134,6 +148,12 @@ responses:
       type: array
       items:
         $ref: '#/definitions/customer'
+
+  getGoalsCustomer:
+    description: Get the goals of one customer
+    schema:
+      type: array
+      $ref: '#/definitions/goal'
 
 parameters:
   idParam:
