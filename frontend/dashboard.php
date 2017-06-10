@@ -112,7 +112,7 @@
 					width: 500,
 					height: 300,
 					//title: 'Spending Categories',
-					pieHole: 0.5,
+					pieHole: 0.6,
 					colors:['#c00','blue','green','orange','magenta']
 				};
 				var chart = new google.visualization.PieChart(document.getElementById('donutchart'));

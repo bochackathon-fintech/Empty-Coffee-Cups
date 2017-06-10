@@ -12,7 +12,7 @@
                 <a href="dashboard.php">Dashboard</a>
             </li>
             <li>
-                <a href="#">Planning</a>
+                <a href="planning.php">Planning</a>
             </li>
             <li>
                 <a href="#">Spending</a>
