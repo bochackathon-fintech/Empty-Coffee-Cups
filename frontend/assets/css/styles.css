@@ -369,3 +369,10 @@ span.accuont-amount {
 	border-right: 1px solid #ccc;
 }
 /* general css ends */
+
+/* planning starts */
+.customer-goals-list {
+	margin-top: 20px;
+	padding-top: 20px;
+}
+/* planning ends */
