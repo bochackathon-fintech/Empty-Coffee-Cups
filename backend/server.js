@@ -147,11 +147,17 @@ app.delete("/customer/:id/goals", function(req, res, next){
         })
         doc = doc[0];
 
+				var saved = 0;
         doc.goals  = doc.goals.filter(function(el) {
+					  if (el.name == req.query.name){
+							saved = el.saved;
+						}
             return el.name !== req.query.name;
         });
 
-        cloudantDb.insert(doc, function (er, result) {
+			 doc.goals = updateGoals(doc.goals,saved);
+
+       cloudantDb.insert(doc, function (er, result) {
             if (er) {
                 throw er;
             }
@@ -179,12 +185,13 @@ app.listen(port, function () {
 // set up cron jobs
 console.log("setting up cron jobs");
 
-new CronJob("*/40 * * * * *", everyXseconds(40), null, true);
+new CronJob("*/5 * * * * *", everyXseconds(5), null, true);
 
 //------------------------------------------------------------------------------
 function everyXseconds(seconds) {
     return function() {
-        //console.log(new Date() + ": another " + seconds + " seconds have passed!");
+			return;
+        console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
 				cloudantDb.fetch({}, function(err, body) {
 						var docs = body.rows.map(function(row) {
@@ -207,30 +214,42 @@ function everyXseconds(seconds) {
 
 							if (goals == null) return;
 
-							var arrayLength = goals.length;
-							for (var i = 0; i < arrayLength; i++) {
+							goals = updateGoals(goals,acctoday);
 
-										if (goals[i].saved >= goals[i].value) continue;
-
-										if ( (acctoday+goals[i].saved) > goals[i].value){
-											acctoday = acctoday - (goals[i].value  - goals[i].saved);
-											goals[i].saved = goals[i].value;
-											continue;
-										}
-										goals[i].saved += acctoday;
-										acctoday = 0;
+							doc.goals = goals;
+							cloudantDb.insert(doc, function (er, result) {
+								if (er) {
+									throw er;
 								}
-								doc.goals = goals;
-								cloudantDb.insert(doc, function (er, result) {
-				            if (er) {
-				                throw er;
-				            }
-				        });
+							});
 						});
-
-
-
 				});
 				return;
     }
+}
+
+//------------------------------------------------------------------------------
+
+function updateGoals(goals,acctoday){
+					if (goals == null) return null;
+					if (acctoday == 0) return goals;
+
+					acctoday = parseFloat(acctoday);
+
+					var arrayLength = goals.length;
+					for (var i = 0; i < arrayLength; i++) {
+
+						if ( parseFloat(goals[i].saved) >= parseFloat(goals[i].value)) continue;
+
+						if ( parseFloat(goals[i].value) < (acctoday+parseFloat(goals[i].saved)) ){
+
+							var diff = (parseFloat(goals[i].value)  - parseFloat(goals[i].saved));
+							goals[i].saved = goals[i].value;
+							acctoday = acctoday - diff;
+							continue;
+						}
+						goals[i].saved = acctoday + parseFloat(goals[i].saved);
+						acctoday = 0;
+					}
+					return goals;
 }
