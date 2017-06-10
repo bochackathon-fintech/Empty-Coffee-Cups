@@ -111,11 +111,7 @@ app.post("/customer/:id/goals", function(req, res, next){
             }
         });
 
-
         doc = doc[0];
-
-
-console.log(req.query);
 
         doc.goals.push({
             "id":  req.query.id,
@@ -189,11 +185,40 @@ new CronJob("*/10 * * * * *", everyXseconds(10), null, true);
 function everyXseconds(seconds) {
     return function() {
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
+
 				cloudantDb.view("customers","customers",function(err, body){
 					if (!err){
 						body.rows.forEach(function(doc){
 							console.log(doc);
-				
+
+							var limitRoundup = doc.value.limitRoundup;
+  						var montlyFixedAmmount = doc.value.montlyFixedAmmount;
+  						var bankuuid = doc.value.bankuuid;
+  						var bankview = doc.value.bankview;
+  						var bankid = doc.value.bankid;
+
+							var acctoday = 120;
+							goals = doc.value.goals;
+
+							var arrayLength = goals.length;
+							for (var i = 0; i < arrayLength; i++) {
+
+										if (goals[i].saved >= goals[i].value) continue;
+
+										if ( (acctoday+goals[i].saved) > goals[i].value){
+											acctoday = acctoday - (goals[i].value  - goals[i].saved);
+											goals[i].saved = goals[i].value;
+											continue;
+										}
+										goals[i].saved += acctoday;
+										acctoday = 0;
+								}
+								doc.value.goals = goals;
+								/*body.insert(doc, function (er, result) {
+				            if (er) {
+				                throw er;
+				            }
+				        });*/
 						});
 					}else{
 						console.log("Failed to connect to database.");
