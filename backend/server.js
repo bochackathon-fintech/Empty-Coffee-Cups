@@ -117,6 +117,18 @@ app.get("/customer/:id/goals", function(req, res, next){
    })
 });
 
+app.get("/customer/:id/goalsmob", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+	cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+		var goals = body.rows.map(function(row) {
+			if (row.doc != null){
+	    	return row.doc.goals;
+			}
+	  })
+	res.json(goals[0]);
+   })
+});
+
 app.post("/customer/:id/goals", function(req, res, next){
 
 
