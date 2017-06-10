@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.json());
 const Cloudant = require('cloudant');
+var http = require('http')
+
+
 
 
 var CronJob = require("cron").CronJob
@@ -11,6 +14,20 @@ var CronJob = require("cron").CronJob
 // Emulating VCAP_VARIABLES if running in local mode
 try { require("./vcap-local"); } catch (e) {}
 var appEnv = cfenv.getAppEnv();
+
+
+/// Static magic numbers for BOC
+
+const bocviewuuid = '5710bba5d42604e4072d1e92'
+const bocuuid = 'bda8eb884efcef7082792d45'
+const bocapikey = 'f62cecf9b2f248f3bb0059fad858949c'
+const bocurl = 'api.bocapi.net'
+const bocurlpath = '/v1/api/'
+
+
+
+/// Static magic numbers for PLAID
+
 
 
 
@@ -190,41 +207,42 @@ new CronJob("*/5 * * * * *", everyXseconds(5), null, true);
 //------------------------------------------------------------------------------
 function everyXseconds(seconds) {
     return function() {
-			return;
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
-				cloudantDb.fetch({}, function(err, body) {
-						var docs = body.rows.map(function(row) {
-								if (row.doc != null){
-										return row.doc;
-								}
-						})
+        getAccountValue('','','','');
+        return;
+        cloudantDb.fetch({}, function(err, body) {
+            var docs = body.rows.map(function(row) {
+                if (row.doc != null){
+                    return row.doc;
+                }
+            })
 
-						docs.forEach(function(doc){
+            docs.forEach(function(doc){
 
-							var limitRoundup = doc.limitRoundup;
-  						var montlyFixedAmmount = doc.montlyFixedAmmount;
-  						var bankuuid = doc.bankuuid;
-  						var bankview = doc.bankview;
-  						var bankid = doc.bankid;
+                var limitRoundup = doc.limitRoundup;
+                var montlyFixedAmmount = doc.montlyFixedAmmount;
+                var bankuuid = doc.bankuuid;
+                var bankview = doc.bankview;
+                var bankid = doc.bankid;
 
-							var acctoday = 2120;
+                var acctoday = 2120;
 
-							goals = doc.goals;
+                goals = doc.goals;
 
-							if (goals == null) return;
+                if (goals == null) return;
 
-							goals = updateGoals(goals,acctoday);
+                goals = updateGoals(goals,acctoday);
 
-							doc.goals = goals;
-							cloudantDb.insert(doc, function (er, result) {
-								if (er) {
-									throw er;
-								}
-							});
-						});
-				});
-				return;
+                doc.goals = goals;
+                cloudantDb.insert(doc, function (er, result) {
+                    if (er) {
+                        throw er;
+                    }
+                });
+            });
+        });
+        return;
     }
 }
 
@@ -253,3 +271,54 @@ function updateGoals(goals,acctoday){
 					}
 					return goals;
 }
+
+//------------------------------------------------------------------------------
+
+
+function getAccountValue(bankid,accountid,viewid,authid){
+
+    var body = JSON.stringify({
+        BANK_ID : bocuuid,
+        ACCOUNT_ID : 'a746637b91b19a261a67d8bd',
+        VIEW_ID : bocviewuuid
+    });
+
+    var vpath = bocurlpath + "banks/" + bocuuid + "/accounts/a746637b91b19a261a67d8bd/5710bba5d42604e4072d" +"/account"
+    var request = new http.ClientRequest({
+        hostname: bocurl,
+        port: 80,
+        path: vpath,
+        method: "GET",
+        headers: {
+            "Auth-Provider-Name":"01460900080600",
+            "Auth-ID":"123456789",
+            "Ocp-Apim-Subscription-Key":"f62cecf9b2f248f3bb0059fad858949c",
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(body)
+        }
+    },
+    function(res) {
+
+        res.setEncoding('utf8');
+        res.on('data', function (data) {
+            console.log("data:"+ data); 
+        });
+        res.on('end', function (data) {
+            console.log("end: " + data); 
+        });
+        res.on('error', function(data) {
+              console.log('problem with request: ' + data);
+        });
+    }
+
+    
+    );
+
+
+
+
+}
+
+
+
+
