@@ -21,9 +21,21 @@
 		        <div class="container">
 		            <div class="row">
 		                <div class="col-xs-12">
-		                	
-		                	<?php 
-		                	?>
+		                	<div class="row">
+		                		<div class="col-sm-6 add-new-goal">
+		                			<?php
+		                				include_once('saveGoal.php');
+		                			?>
+		                		</div>
+		                		<div class="col-sm-6 sort-goals-funs">
+		                			Sorting stuff
+		                		</div>
+		                	</div>
+	                		<div class="customer-goals-list border-top">
+	                			<?php
+	                				echo listGoalsPlanning('304fd2e19f1c14fe3345cca788e4e83d');
+								?>
+	                		</div>
 		                </div>
 		            </div>
 		        </div>
