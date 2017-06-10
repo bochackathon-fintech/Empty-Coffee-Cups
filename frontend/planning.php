@@ -29,9 +29,9 @@
 		                		</div>
 		                		<div class="col-sm-6 sort-goals-funs">
 		                			<div class="settigns">
-										<h2>Settings <i class="fa fa-cogs" aria-hidden="true"></i></h2>
+										<div class="show-sort-settings"><h2><i class="fa fa-cogs" aria-hidden="true"></i></h2></div>
 										<!-- Single button -->
-										<div class="btn-group">
+										<div class="btn-group amhidden sortby-settings">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												Sort By <span class="caret"></span>
 											</button>
@@ -56,5 +56,8 @@
 		    </div>
 		    <!-- /#page-content-wrapper -->
 	    </div>
+		<?php
+			include_once("footer.php");
+		?>
 	</body>
 </html>

@@ -9,6 +9,7 @@ function getBaseUrl() {
 	return "localhost/hackathon/";
 }
 
+/* Mixalis API  Functions */
 /* customers functions */
 function getAllCustomers() {
 	// Get cURL resource
@@ -176,6 +177,7 @@ function listGoalsPlanning($custId) {
 							</div>
 							<div class="span-dets-wrapper">
 								<span class="goal-name span-inner-title">Goal:</span><span class="span-inner-val">'.$goal->name.'</span>
+								<span class="goal-name span-inner-title">Progress:</span><span class="span-inner-val">'.$goal->saved.'</span>
 								<span class="goal-setdate span-inner-title">Target Date:</span><span class="span-inner-val">'.$goal->date.'</span>
 							</div>
 							<div class="goal-amount span-inner-title">Required Amount:<span class="span-inner-val">'.$goal->value.'</div>
@@ -189,4 +191,25 @@ function listGoalsPlanning($custId) {
 	}
 	$goals_list .= implode('', $goalProgres);
 	return $goals_list;
+}
+
+/*BOC API Functions */
+//Todo:
+function getTransactions() {
+
+}
+//Todo:
+function getAccounts() {
+	//accId  bda8eb884efcea209b2a6240
+	//viewId 5710bba5d42604e4072d1e92
+	
+}
+//Todo:
+function getBanks() {
+	//bankId bda8eb884efcef7082792d45
+}
+//Todo:
+function getBOCCustomer() {
+	return 'Alex Success';
+	//bankId bda8eb884efcef7082792d45
 }

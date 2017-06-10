@@ -33,5 +33,8 @@
 		    </div>
 		    <!-- /#page-content-wrapper -->
 	    </div>
+		<?php
+			include_once("footer.php");
+		?>
 	</body>
 </html>

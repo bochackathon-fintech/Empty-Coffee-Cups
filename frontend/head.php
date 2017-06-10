@@ -24,4 +24,9 @@
 	<link rel="stylesheet" href="assets/css/font-awesome/css/font-awesome.min.css">
 	<!-- custom includes -->
 	<link href="assets/css/styles.css" rel="stylesheet">
+	<!-- custom includes -->
+	<script src="assets/watson/custom.js"></script>
+	<script src="assets/watson/scripts.js"></script>
+	<!-- custom includes -->
+	<link href="assets/watson/styles.css" rel="stylesheet">
 </head>

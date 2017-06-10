@@ -28,6 +28,16 @@ $(document).ready(function () {
             $(this).html('<i class="fa fa-plus-square" aria-hidden="true"></i>');
         }
     });
+    
+    $(".show-sort-settings").click(function() {
+        if($(".sortby-settings").hasClass('amhidden')) {
+            $(".sortby-settings").removeClass('amhidden');
+            $(".sortby-settings").slideDown();
+        } else {
+            $(".sortby-settings").slideUp();
+            $(".sortby-settings").addClass('amhidden');
+        }
+    });
 
     var trigger = $('.hamburger'),
     overlay = $('.overlay'),
@@ -106,5 +116,18 @@ $(document).ready(function () {
                 reloadGoalsList();
             }
         });
+    });
+
+    ﻿
+﻿
+
+    $(".top_menu").click(function() {
+        if($(".watsonChatbot").hasClass("amUp")) {
+            $(".watsonChatbot").removeClass("amUp");
+            $(".watsonChatbot").css("bottom", -436);
+        } else {
+            $(".watsonChatbot").addClass("amUp");
+            $(".watsonChatbot").css("bottom", 0);
+        }
     });
 });

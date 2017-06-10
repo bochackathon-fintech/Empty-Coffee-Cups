@@ -372,8 +372,14 @@ span.accuont-amount {
 /* general css ends */
 
 /* planning starts */
-.setgoals-form {
+.show-sort-settings {
+	text-align: right;
+}
+.setgoals-form, .sortby-settings {
 	display: none;
+}
+.sortby-settings {
+	float: right;
 }
 .goal-group-details {
 	position: relative;
@@ -401,3 +407,19 @@ span.span-inner-val {
 	cursor: pointer;
 }
 /* planning ends */
+
+/* chatbot */
+.footer {
+  position: relative;
+}
+.watsonChatbot {
+    position: fixed;
+    right: 50px;
+    bottom: -436px;
+    z-index: 1111111;
+    width: 420px;
+    height: 500px;
+}
+.top_menu {
+  cursor: pointer;
+}

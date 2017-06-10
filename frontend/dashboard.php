@@ -119,7 +119,7 @@
 				var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
 
 				// The select handler. Call the chart's getSelection() method
-				function selectHandler() {
+				/*function selectHandler() {
 					var selectedItem = chart.getSelection()[0];
 					if (selectedItem) {
 						console.log(selectedItem);
@@ -127,7 +127,7 @@
 						console.log('The user selected ' + value);
 					}
 				}
-  				google.visualization.events.addListener(chart, 'select', selectHandler);
+  				google.visualization.events.addListener(chart, 'select', selectHandler);*/
 
 				chart.draw(data, options);
 			}
@@ -150,10 +150,10 @@
 						title: 'Company Performance',
 						subtitle: 'Income, Expenses, and Profit: 2014-2017',
 					},*/
+					backgroundColor: '#fafafa',
 					bars: 'vertical', // Required for Material Bar Charts.
 					hAxis: {format: 'decimal'},
 					height: 300,
-					backgroundColor: '#fafafa',
 					colors: ['#1b9e77', '#d95f02', '#7570b3']
 				};
 
@@ -161,5 +161,8 @@
 				chart.draw(data, options);
 			}
 		</script>
+		<?php
+			include_once("footer.php");
+		?>
 	</body>
 </html>
