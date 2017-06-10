@@ -109,8 +109,13 @@ app.post("/customer/:id/goals", function(req, res, next){
             if (row.doc != null){
                 return row.doc;
             }
-        })
+        });
+
+
         doc = doc[0];
+
+
+console.log(req.query);
 
         doc.goals.push({
             "id":  req.query.id,
@@ -188,6 +193,7 @@ function everyXseconds(seconds) {
 					if (!err){
 						body.rows.forEach(function(doc){
 							console.log(doc);
+				
 						});
 					}else{
 						console.log("Failed to connect to database.");
