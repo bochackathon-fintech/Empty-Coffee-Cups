@@ -179,26 +179,33 @@ app.listen(port, function () {
 // set up cron jobs
 console.log("setting up cron jobs");
 
-new CronJob("*/10 * * * * *", everyXseconds(10), null, true);
+new CronJob("*/40 * * * * *", everyXseconds(40), null, true);
 
 //------------------------------------------------------------------------------
 function everyXseconds(seconds) {
     return function() {
-        console.log(new Date() + ": another " + seconds + " seconds have passed!");
+        //console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
-				cloudantDb.view("customers","customers",function(err, body){
-					if (!err){
-						body.rows.forEach(function(doc){
-							console.log(doc);
+				cloudantDb.fetch({}, function(err, body) {
+						var docs = body.rows.map(function(row) {
+								if (row.doc != null){
+										return row.doc;
+								}
+						})
 
-							var limitRoundup = doc.value.limitRoundup;
-  						var montlyFixedAmmount = doc.value.montlyFixedAmmount;
-  						var bankuuid = doc.value.bankuuid;
-  						var bankview = doc.value.bankview;
-  						var bankid = doc.value.bankid;
+						docs.forEach(function(doc){
 
-							var acctoday = 120;
-							goals = doc.value.goals;
+							var limitRoundup = doc.limitRoundup;
+  						var montlyFixedAmmount = doc.montlyFixedAmmount;
+  						var bankuuid = doc.bankuuid;
+  						var bankview = doc.bankview;
+  						var bankid = doc.bankid;
+
+							var acctoday = 2120;
+
+							goals = doc.goals;
+
+							if (goals == null) return;
 
 							var arrayLength = goals.length;
 							for (var i = 0; i < arrayLength; i++) {
@@ -213,16 +220,17 @@ function everyXseconds(seconds) {
 										goals[i].saved += acctoday;
 										acctoday = 0;
 								}
-								doc.value.goals = goals;
-								/*body.insert(doc, function (er, result) {
+								doc.goals = goals;
+								cloudantDb.insert(doc, function (er, result) {
 				            if (er) {
 				                throw er;
 				            }
-				        });*/
+				        });
 						});
-					}else{
-						console.log("Failed to connect to database.");
-					}
+
+
+
 				});
+				return;
     }
 }
