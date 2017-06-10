@@ -5,6 +5,9 @@ const app = express();
 app.use(bodyParser.json());
 const Cloudant = require('cloudant');
 
+
+var CronJob = require("cron").CronJob
+
 // Emulating VCAP_VARIABLES if running in local mode
 try { require("./vcap-local"); } catch (e) {}
 var appEnv = cfenv.getAppEnv();
@@ -39,7 +42,7 @@ app.get("/customers", function(req, res, next){
 });
 
 app.post("/customers", function(req, res, next){
-    
+
         cloudantDb.insert({ 'birth': req.query.birth, 'goals':[], "registrationdate": req.query.registrationdate, "expectedincome": req.query.expectedincome}, function (er, result) {
             if (er) {
                 throw er;
@@ -170,3 +173,25 @@ app.listen(port, function () {
 	console.log(`OpenAPI (Swagger) spec is available at ${address}:${port}/swagger/api`)
 	console.log(`Swagger UI is available at ${address}:${port}/explorer`)
 });
+
+
+// set up cron jobs
+console.log("setting up cron jobs");
+
+new CronJob("*/10 * * * * *", everyXseconds(10), null, true);
+
+//------------------------------------------------------------------------------
+function everyXseconds(seconds) {
+    return function() {
+        console.log(new Date() + ": another " + seconds + " seconds have passed!");
+				cloudantDb.view("customers","customers",function(err, body){
+					if (!err){
+						body.rows.forEach(function(doc){
+							console.log(doc);
+						});
+					}else{
+						console.log("Failed to connect to database.");
+					}
+				});
+    }
+}
