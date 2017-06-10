@@ -1,7 +1,7 @@
 <div class="add-new-goal-title">
-	<h2>Set A New Goal</h2>
+	<h2>Set A New Goal <span class="showAddGoalForm"><i class="fa fa-plus-square" aria-hidden="true"></i></span></h2>
 </div>
-<form id="setgoals-form" class="setgoals-form" action="manager/ajaxForms.php" method="POST">
+<form id="setgoals-form" class="setgoals-form amhidden" action="manager/ajaxForms.php" method="POST">
 	<!-- action for form! -->
 	<input type="hidden" id="action" name="action" value="setgoal">
 
@@ -19,5 +19,5 @@
 	<div class="form-group">
 		<input type="text" class="form-control" id="goal_date" name="goal_date" placeholder="Goal Date">
 	</div>
-	<button type="submit" class="btn btn-primary signin-but">Create Goal</button>
+	<button type="submit" class="btn btn-primary">Add Goal</button>
 </form>

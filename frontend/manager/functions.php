@@ -120,9 +120,27 @@ function setGoals($custId,  $name, $value, $saved, $gdate, $accountid, $priority
 	// Close request to clear up some resources
 	curl_close($curl);
 }
-/* Todo */
-function deleteGoals() {
-
+function deleteGoal($custId,$goal_name) {
+	$goal_details = array(
+	        'custId' => $custId,
+	        'goal_name' => $goal_name
+	    );
+	$goal_details_json = json_encode($goal_details);
+	// Get cURL resource
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_CUSTOMREQUEST => 'DELETE',
+	    CURLOPT_URL => "https://hackathon-be.mybluemix.net/customer/$custId/goals?name=$goal_name",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request',
+	    CURLOPT_HTTPHEADER, array("Content-Type: text/plain; charset=utf-8","Accept:application/json"),
+	    CURLOPT_POST => 1,
+	    CURLOPT_POSTFIELDS => array('goal'=> $goal_details_json)
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
 }
 function listGoalsPlanning($custId) {
 	$goals_list = '';
@@ -151,9 +169,16 @@ function listGoalsPlanning($custId) {
 			$progress_bar_color = "progress-bar-success";
 		}
 		//echo "$goal->value $goal->saved $percentage%<br>";
-		$goalProgres[] = '<div class="goal-group-details" data-sortp="'.$goal->priority.'">
-							<span class="goal-name">Goal: '.$goal->name.'</span>
-							<span class="goal-setdate">Target Date: '.$goal->date.'</span>
+		$goalProgres[] = '<div class="goal-group-details border-bottom" data-sortp="'.$goal->priority.'" data-sortstats="'.$percentage.'">
+							<div class="deleteGoal">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+								<input type="hidden" class="goal_name" value="'.$goal->name.'" />
+							</div>
+							<div class="span-dets-wrapper">
+								<span class="goal-name span-inner-title">Goal:</span><span class="span-inner-val">'.$goal->name.'</span>
+								<span class="goal-setdate span-inner-title">Target Date:</span><span class="span-inner-val">'.$goal->date.'</span>
+							</div>
+							<div class="goal-amount span-inner-title">Required Amount:<span class="span-inner-val">'.$goal->value.'</div>
 							<div class="goal-completion-percent">'.$percentage.'% Complete</div>
 							<div class="progress">
 								<div class="progress-bar '.$progress_bar_color.' progress-bar-striped" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percentage.'%">

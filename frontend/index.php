@@ -21,7 +21,12 @@
 		        <div class="container">
 		            <div class="row">
 		                <div class="col-xs-12">
-		                	Lorem Ipsum. . .
+		                <?php
+							$customer = getCustomer('304fd2e19f1c14fe3345cca788e4e83d');
+							echo "<pre>";
+							var_dump($customer);
+							echo "</pre>";
+		                ?>
 		                </div>
 		            </div>
 		        </div>

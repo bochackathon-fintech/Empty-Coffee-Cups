@@ -1,4 +1,34 @@
 $(document).ready(function () {
+
+    $(".sortby.priority").click(function() {
+        console.log('priority');
+        tinysort('.customer-goals-list > .goal-group-details',{data:'sortp'});
+    });
+    $('.sortby.status').click(function() {
+        console.log('status');
+        tinysort('.customer-goals-list > .goal-group-details',{order:'desc', data:'sortstats'});
+    });
+    $('.sortby.ltoh').click(function() {
+        console.log('ltoh');
+        tinysort('.customer-goals-list > .goal-group-details',{order:'desc', data:'sortp'});
+    });
+    $(".sortby.htol").click(function() {
+        console.log('htol');
+        tinysort('.customer-goals-list > .goal-group-details',{order:'asc', data:'sortp'});
+    });
+
+    $(".showAddGoalForm").click(function() {
+        if($(".setgoals-form").hasClass('amhidden')) {
+            $(".setgoals-form").removeClass('amhidden');
+            $(".setgoals-form").slideDown();
+            $(this).html('<i class="fa fa-minus-square" aria-hidden="true"></i>');
+        } else {
+            $(".setgoals-form").slideUp();
+            $(".setgoals-form").addClass('amhidden');
+            $(this).html('<i class="fa fa-plus-square" aria-hidden="true"></i>');
+        }
+    });
+
     var trigger = $('.hamburger'),
     overlay = $('.overlay'),
     isClosed = false;
@@ -38,7 +68,7 @@ $(document).ready(function () {
             url: url,
             data: $(this).serialize(), // serializes the form's elements.
             success: function(data) {
-                console.log(data); // show response from the php script.
+                //console.log(data); // show response from the php script.
                 reloadGoalsList();
             }
         });
@@ -61,4 +91,20 @@ $(document).ready(function () {
             }
         });
     }
+    //delete goal
+    $(document).on("click", ".deleteGoal", function(e) {
+        var action = 'deleteGoal';
+        var custId = '304fd2e19f1c14fe3345cca788e4e83d';
+        var goal_name = $(this).find('.goal_name').val();
+
+        $.ajax({
+            type: "POST",
+            url: "manager/ajaxForms.php",
+            data: {action: action, customer_id: custId, goal_name: goal_name},
+            success: function(data) {
+                //console.log(data); // show response from the php script.
+                reloadGoalsList();
+            }
+        });
+    });
 });

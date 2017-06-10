@@ -28,7 +28,21 @@
 		                			?>
 		                		</div>
 		                		<div class="col-sm-6 sort-goals-funs">
-		                			Sorting stuff
+		                			<div class="settigns">
+										<h2>Settings <i class="fa fa-cogs" aria-hidden="true"></i></h2>
+										<!-- Single button -->
+										<div class="btn-group">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Sort By <span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu">
+												<li><a href="#" class="sortby priority" data-sortby="priority">Priority</a></li>
+												<li><a href="#" class="sortby status" data-sortby="Status">Status</a></li>
+												<li><a href="#" class="sortby ltoh" data-sortby="ltoh">Low to High</a></li>
+												<li><a href="#" class="sortby htol" data-sortby="htol">High to Log</a></li>
+											</ul>
+										</div>
+									</div>
 		                		</div>
 		                	</div>
 	                		<div class="customer-goals-list border-top">

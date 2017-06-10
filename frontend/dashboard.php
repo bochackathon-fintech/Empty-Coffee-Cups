@@ -107,6 +107,7 @@
 					['Other',    7]
 				]);
 				var options = {
+					backgroundColor: '#fafafa',
 					chartArea:{left:0,top:10,width:'100%',height:'100%'},
 					fontSize: 11,
 					width: 500,
@@ -152,6 +153,7 @@
 					bars: 'vertical', // Required for Material Bar Charts.
 					hAxis: {format: 'decimal'},
 					height: 300,
+					backgroundColor: '#fafafa',
 					colors: ['#1b9e77', '#d95f02', '#7570b3']
 				};
 

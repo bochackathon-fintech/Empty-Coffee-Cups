@@ -10,6 +10,9 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- custom includes -->
 	<script src="assets/js/custom.js"></script>
+	<script src="assets/js/sort/tinysort.min.js"></script>
+	<script src="assets/js/sort/tinysort.charorder.min.js"></script>
+	<script src="assets/js/sort/jquery.tinysort.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
 	<!-- Latest compiled and minified JavaScript -->

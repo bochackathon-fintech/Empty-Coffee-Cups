@@ -25,7 +25,8 @@
 	        break;
 
 	    case 'deleteGoal':
-	    	deleteGoal($custId);
+			$goal_name = $_POST['goal_name'];
+	    	deleteGoal($custId,$goal_name);
 	        break;
 
 	    case 'setCustomer':
