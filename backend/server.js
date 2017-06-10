@@ -86,18 +86,19 @@ app.post("/customer/:id/goals", function(req, res, next){
 
         doc.goals.push({
             "id":  req.query.id,
+            "name":  req.query.name,
             "value":  req.query.value,
             "saved":  req.query.saved,
             "date":  req.query.date,
             "accountid":  req.query.accountid,
             "priority":  req.query.priority}
-            )
+            );
 
-            cloudantDb.insert(doc, function (er, result) {
-                if (er) {
-                    throw er;
-                }
-            });
+        cloudantDb.insert(doc, function (er, result) {
+            if (er) {
+                throw er;
+            }
+        });
 
 
     });
@@ -107,8 +108,31 @@ app.post("/customer/:id/goals", function(req, res, next){
 });
 
 app.delete("/customer/:id/goals", function(req, res, next){
-	// Put your business logic here
-	res.json();
+
+    var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+    cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+        var doc = body.rows.map(function(row) {
+            if (row.doc != null){
+                return row.doc;
+            }
+        })
+        doc = doc[0];
+
+        doc.goals  = doc.goals.filter(function(el) {
+            return el.name !== req.query.name;
+        });
+
+        cloudantDb.insert(doc, function (er, result) {
+            if (er) {
+                throw er;
+            }
+        });
+
+
+    });
+
+    res.json();
+
 });
 
 
