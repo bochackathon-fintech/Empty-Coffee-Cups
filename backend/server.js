@@ -39,23 +39,48 @@ app.get("/customers", function(req, res, next){
 });
 
 app.post("/customers", function(req, res, next){
-	// Put your business logic here
+    
+        cloudantDb.insert({ 'birth': req.query.birth, 'goals':[], "registrationdate": req.query.registrationdate, "expectedincome": req.query.expectedincome}, function (er, result) {
+            if (er) {
+                throw er;
+            }
+        });
+
 	res.json();
 });
 
 app.delete("/customer/:id", function(req, res, next){
-	// Put your business logic here
+        console.log(req.params.id);
+
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+        cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+            var doc = body.rows.map(function(row) {
+                if (row.doc != null){
+                    return row.doc;
+                }
+            });
+
+            doc = doc[0];
+
+            cloudantDb.destroy(req.params.id,doc._rev,function(err, body) {
+                if (!err)
+                    console.log(body);
+            });
+
+   })
+
+
 	res.json();
 });
 
 app.get("/customer/:id", function(req, res, next){
 	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
-	cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
-		var doc = body.rows.map(function(row) {
-			if (row.doc != null){
-	    	return row.doc;
-			}
-	  })
+        cloudantDb.fetch({keys: [idn.id]}, function(err, body) {
+            var doc = body.rows.map(function(row) {
+                if (row.doc != null){
+                    return row.doc;
+                }
+            })
 	res.json(doc);
    })
 });

@@ -26,7 +26,9 @@ paths:
       operationId: add
       description: Add new Customer
       parameters:
-        - $ref: '#/parameters/CustomerNameParam'
+        - $ref: '#/parameters/dateParam'
+        - $ref: '#/parameters/birthParam'
+        - $ref: '#/parameters/incomeParam'
       responses:
         200:
           $ref: '#/responses/getOneCustomer'
@@ -183,6 +185,29 @@ parameters:
     required: true
     type: integer
     format: int64
+
+  dateParam:
+    name: date
+    in: query
+    description: Date day
+    required: true
+    type: string
+
+  incomeParam:
+    name: income
+    in: query
+    description: Expected Income
+    required: true
+    type: integer
+
+
+
+  birthParam:
+    name: birth
+    in: query
+    description: Birth date 
+    required: true
+    type: string
 
   nameGoalParam:
     name: name
