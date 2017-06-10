@@ -8,7 +8,7 @@
 2. write: npm install
 3. write: npm start
 4. Visit localhost to access the API
-
+5. Write bluemix app push to upload to the clould (in our case https://hackathon-be.mybluemix.net 
 
 NOTES:
 
