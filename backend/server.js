@@ -5,6 +5,21 @@ const app = express();
 app.use(bodyParser.json());
 const Cloudant = require('cloudant');
 var http = require('http')
+const plaid = require('plaid');
+var moment = require('moment');
+
+
+
+const plaidClient = new plaid.Client("59357581bdc6a401d71d8525", 
+                                     "d547b8b3b20443694b62b49534f7ac", 
+                                     "d6e21b64c3f3acad6465d5ed088295", 
+                                     plaid.environments.sandbox, 
+                                     {
+                                           timeout: 10 * 60 * 1000, // 30 minutes 
+                                             agent: 'Patient Agent'
+                                     }
+                                     );
+
 
 
 
@@ -176,17 +191,17 @@ app.delete("/customer/:id/goals", function(req, res, next){
         })
         doc = doc[0];
 
-				var saved = 0;
+        var saved = 0;
         doc.goals  = doc.goals.filter(function(el) {
-					  if (el.name == req.query.name){
-							saved = el.saved;
-						}
+            if (el.name == req.query.name){
+                saved = el.saved;
+            }
             return el.name !== req.query.name;
         });
 
-			 doc.goals = updateGoals(doc.goals,saved);
+        doc.goals = updateGoals(doc.goals,saved);
 
-       cloudantDb.insert(doc, function (er, result) {
+        cloudantDb.insert(doc, function (er, result) {
             if (er) {
                 throw er;
             }
@@ -221,7 +236,7 @@ function everyXseconds(seconds) {
     return function() {
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
-        getAccountValue('','','','');
+        //getAccountValue('','','','');
         return;
         cloudantDb.fetch({}, function(err, body) {
             var docs = body.rows.map(function(row) {
@@ -261,27 +276,27 @@ function everyXseconds(seconds) {
 //------------------------------------------------------------------------------
 
 function updateGoals(goals,acctoday){
-					if (goals == null) return null;
-					if (acctoday == 0) return goals;
+    if (goals == null) return null;
+    if (acctoday == 0) return goals;
 
-					acctoday = parseFloat(acctoday);
+    acctoday = parseFloat(acctoday);
 
-					var arrayLength = goals.length;
-					for (var i = 0; i < arrayLength; i++) {
+    var arrayLength = goals.length;
+    for (var i = 0; i < arrayLength; i++) {
 
-						if ( parseFloat(goals[i].saved) >= parseFloat(goals[i].value)) continue;
+        if ( parseFloat(goals[i].saved) >= parseFloat(goals[i].value)) continue;
 
-						if ( parseFloat(goals[i].value) < (acctoday+parseFloat(goals[i].saved)) ){
+        if ( parseFloat(goals[i].value) < (acctoday+parseFloat(goals[i].saved)) ){
 
-							var diff = (parseFloat(goals[i].value)  - parseFloat(goals[i].saved));
-							goals[i].saved = goals[i].value;
-							acctoday = acctoday - diff;
-							continue;
-						}
-						goals[i].saved = acctoday + parseFloat(goals[i].saved);
-						acctoday = 0;
-					}
-					return goals;
+            var diff = (parseFloat(goals[i].value)  - parseFloat(goals[i].saved));
+            goals[i].saved = goals[i].value;
+            acctoday = acctoday - diff;
+            continue;
+        }
+        goals[i].saved = acctoday + parseFloat(goals[i].saved);
+        acctoday = 0;
+    }
+    return goals;
 }
 
 //------------------------------------------------------------------------------
