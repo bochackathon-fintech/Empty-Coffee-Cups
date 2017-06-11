@@ -79,10 +79,19 @@
 					                	<h2>Activities</h2>
 					                	<div class="activities-alerts">
 						                	<div class="alert alert-info" role="alert">
-												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 1 Account(s) need your attention <span class="expand-warnings-dropdown"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
+												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 2 Issue(s) need your attention <span class="expand-warnings-dropdown"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
 
 											</div>
 											<div class="warnings-dropdown-wrapper amhidden">
+							                	<div class="alert alert-warning" role="alert">
+													<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> According to your transaction history, if you continue with this pattern using AMEX Blue you will save €
+													<?php
+														$savingsUsingAMEX = getTransactions();
+														$savingsUsingAMEX = number_format($savingsUsingAMEX, 2, '.', ',');
+														echo $savingsUsingAMEX;
+													?>
+													in the next year.
+												</div>
 							                	<div class="alert alert-warning" role="alert">
 													<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent €864. Usually you spend around €500.
 												</div>

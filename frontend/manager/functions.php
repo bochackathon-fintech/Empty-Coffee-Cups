@@ -177,7 +177,7 @@ function listGoalsPlanning($custId) {
 							</div>
 							<div class="span-dets-wrapper">
 								<span class="goal-name "></span><span class="span-inner-val">'.$goal->name.':</span>
-								<span class="goal-name span-inner-title">Progress:</span><span class="span-inner-val">€'.$goal->saved.',</span>
+								<span class="goal-name span-inner-title">Progress:</span><span class="span-inner-val">€'.number_format($goal->saved, 2, '.', ',').',</span>
 								<span class="goal-setdate span-inner-title">Target Date:</span><span class="span-inner-val">'.$goal->date.'</span>
 							</div>
 							<div class="goal-amount span-inner-title">Required Amount:<span class="span-inner-val">€'.$goal->value.'</div>
@@ -196,7 +196,21 @@ function listGoalsPlanning($custId) {
 /*BOC API Functions */
 //Todo:
 function getTransactions() {
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "https://hackathon-be.mybluemix.net/customer/304fd2e19f1c14fe3345cca788e4e83d/amexprofitability",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
 
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
 }
 //Todo:
 function getAccounts() {

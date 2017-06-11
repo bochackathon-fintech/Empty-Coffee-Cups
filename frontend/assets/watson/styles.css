@@ -86,9 +86,17 @@ body {
 .messages .message.left .text {
   color: #c48843;
 }
-.messages .message.right .avatar {
+/*.messages .message.right .avatar {
   background-color: #fdbf68;
   float: right;
+}*/
+.messages .message.right .avatar {
+    background-color: #edeff2;
+    float: right;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url(../images/logo.png);
 }
 .messages .message.right .text_wrapper {
   background-color: #c7eafc;
