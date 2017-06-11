@@ -1,21 +1,15 @@
-## testbe
-
 Frontend "CMS"
 
 ### Table of Contents
 * [Summary](#summary)
-* [Requirements](#requirements)
-* [Configuration](#configuration)
+* [Requirements & Configuration](#Requirements & Configuration)
 
 ### Summary
 
 A simple layout to manage your content. 
 Some custom functions for connecting to APIs, specifically IBM's watson API, our apps API, and BOC API.
 
-### Requirements
+### Requirements & Configuration
 
 - apache server
-
-### Configuration
-
-Extract the contents of frontend folder to your path.
+- Extract the contents of frontend folder to your path.
