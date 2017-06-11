@@ -5,8 +5,8 @@
 	$output = 'test';
 	$action = $_POST['action'];		//what to do what to do..
 
-	// $context = array('saveamount' => 10, 'username' => '', 'balanceamount' => 1500, 'transferamount' => 10);
-	$params = array(//'context' => $context, 
+	$context = array('balanceamount' => '1500');
+	$params = array('context' => $context, 
 					'alternate_intents' => true
 				);
 

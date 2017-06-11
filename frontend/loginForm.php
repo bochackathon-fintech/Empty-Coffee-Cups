@@ -9,11 +9,11 @@
 		<small id="forgotPassword" class="form-text text-muted"><a href="#">Forgot your password?</a></small>
 	</div>
 	<button type="submit" class="btn btn-primary signin-but">Sign In</button>
-	<div>
+	<!--div>
 		<p>Or</p>
 	</div>
 	<button type="submit" class="btn btn-primary google-but">Sign In with Google</button>
-	<button type="submit" class="btn btn-primary yahoo-but">Sign In with Yahoo</button>
+	<button type="submit" class="btn btn-primary yahoo-but">Sign In with Yahoo</button-->
 
 	<div class="row">
 		<div class="login-form-sign-up col-xs-12 text-center">

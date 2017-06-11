@@ -166,7 +166,7 @@ function listGoalsPlanning($custId) {
 		//everything ok continue!
 		$percentage = ($goal->saved/$goal->value) * 100;
 		$progress_bar_color = "progress-bar-warning";
-		if($percentage > 50) {
+		if($percentage > 90) {
 			$progress_bar_color = "progress-bar-success";
 		}
 		//echo "$goal->value $goal->saved $percentage%<br>";
@@ -176,12 +176,12 @@ function listGoalsPlanning($custId) {
 								<input type="hidden" class="goal_name" value="'.$goal->name.'" />
 							</div>
 							<div class="span-dets-wrapper">
-								<span class="goal-name span-inner-title">Goal:</span><span class="span-inner-val">'.$goal->name.'</span>
-								<span class="goal-name span-inner-title">Progress:</span><span class="span-inner-val">'.$goal->saved.'</span>
+								<span class="goal-name "></span><span class="span-inner-val">'.$goal->name.':</span>
+								<span class="goal-name span-inner-title">Progress:</span><span class="span-inner-val">€'.$goal->saved.',</span>
 								<span class="goal-setdate span-inner-title">Target Date:</span><span class="span-inner-val">'.$goal->date.'</span>
 							</div>
-							<div class="goal-amount span-inner-title">Required Amount:<span class="span-inner-val">'.$goal->value.'</div>
-							<div class="goal-completion-percent">'.$percentage.'% Complete</div>
+							<div class="goal-amount span-inner-title">Required Amount:<span class="span-inner-val">€'.$goal->value.'</div>
+							<div class="goal-completion-percent">'.number_format($percentage, 2, '.', ',').'% Complete</div>
 							<div class="progress">
 								<div class="progress-bar '.$progress_bar_color.' progress-bar-striped" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percentage.'%">
 									<span class="sr-only">'.$percentage.'% Complete (success)</span>
