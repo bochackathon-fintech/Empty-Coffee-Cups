@@ -18,6 +18,12 @@
 				$json_resp = $_POST['json_resp'];
 				$json_resp = json_decode($json_resp, true);
 				unset($json_resp['output']);
+
+				if($json_resp['intents'] == 'goaldetails' || isset($json_resp['context']['bbGoalAmount'])) {
+					$json_resp['context']['bbGoalName'] = '';
+					$json_resp['context']['bbGoalAmount'] = '';
+					$json_resp['context']['bbGoalDate'] = '';
+				}
 				unset($json_resp['intents']);
 				unset($json_resp['input']);
 				$params['context'] = $json_resp['context'];

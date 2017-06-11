@@ -31,6 +31,10 @@
 
 	    case 'setCustomer':
 	        break;
+	    case 'getBOCAccount':
+	    	$BOCAccount = getBOCAccount();
+	    	print_r($BOCAccount);
+	        break;
 	}
 
 	echo $output;

@@ -22,9 +22,13 @@
 		            <div class="row">
 		                <div class="col-xs-12">
 		                <?php
-							$customer = getCustomer('304fd2e19f1c14fe3345cca788e4e83d');
+							// $customer = getCustomer('304fd2e19f1c14fe3345cca788e4e83d');
+							// echo "<pre>";
+							// var_dump($customer);
+							// echo "</pre>";
+							$bocAccunt = getBOCCustomer();
 							echo "<pre>";
-							var_dump($customer);
+							var_dump($bocAccunt);
 							echo "</pre>";
 		                ?>
 		                </div>

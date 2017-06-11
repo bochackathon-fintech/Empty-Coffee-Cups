@@ -42,15 +42,15 @@
 					                	<div class="accountsList">
 					                		<div class="account-group">
 					                			<span class="accuont-title">Credit</span>
-					                			<span class="accuont-amount">10,000</span>
+					                			<span class="accuont-amount">7,423</span>
 					                		</div>
 					                		<div class="account-group">
 					                			<span class="accuont-title">Savings</span>
-					                			<span class="accuont-amount">10,000</span>
+					                			<span class="accuont-amount">4,531</span>
 					                		</div>
 					                		<div class="account-group">
 					                			<span class="accuont-title">Loan</span>
-					                			<span class="accuont-amount">10,000</span>
+					                			<span class="accuont-amount">12,846</span>
 					                		</div>
 					                	</div>
 									</div>

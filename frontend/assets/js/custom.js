@@ -117,10 +117,7 @@ $(document).ready(function () {
             }
         });
     });
-
-    ﻿
-﻿
-
+    
     $(".top_menu").click(function() {
         if($(".watsonChatbot").hasClass("amUp")) {
             $(".watsonChatbot").removeClass("amUp");

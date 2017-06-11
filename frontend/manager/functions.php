@@ -202,14 +202,124 @@ function getTransactions() {
 function getAccounts() {
 	//accId  bda8eb884efcea209b2a6240
 	//viewId 5710bba5d42604e4072d1e92
+
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "http://api.bocapi.net/v1/api/banks/bda8eb884efcef7082792d45/accounts?subscription-key=f1817e51b3fb4d2ca3fc279d0df3a061",
+	    // CURLOPT_URL => "192.168.88.202:8080/customer/$custId/goals",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
 	
 }
 //Todo:
 function getBanks() {
 	//bankId bda8eb884efcef7082792d45
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "http://api.bocapi.net/v1/api/banks/bda8eb884efcef7082792d45/customer?subscription-key=f1817e51b3fb4d2ca3fc279d0df3a061",
+	    // CURLOPT_URL => "192.168.88.202:8080/customer/$custId/goals",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
+}
+//Todo:
+function getPrivateAccounts() {
+	//bankId bda8eb884efcef7082792d45
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+		CURLOPT_HTTPHEADER => array(
+							    'Auth-Provider-Name: 01460900080600',
+							    'Auth-ID: 123456789',
+							    'Ocp-Apim-Subscription-Key: f1817e51b3fb4d2ca3fc279d0df3a061'
+							    ),
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "http://api.bocapi.net/v1/api/banks/bda8eb884efcef7082792d45/accounts/private?subscription-key=f1817e51b3fb4d2ca3fc279d0df3a061",
+	    // CURLOPT_URL => "192.168.88.202:8080/customer/$custId/goals",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
 }
 //Todo:
 function getBOCCustomer() {
-	return 'Alex Success';
-	//bankId bda8eb884efcef7082792d45
+	return 'Alex';
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+		CURLOPT_HTTPHEADER => array(
+							    'Auth-Provider-Name: 01460900080600',
+							    'Auth-ID: 123456789',
+							    'Ocp-Apim-Subscription-Key: f1817e51b3fb4d2ca3fc279d0df3a061'
+							    ),
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "http://api.bocapi.net/v1/api/banks/bda8eb884efcef7082792d45/customers/",
+	    // CURLOPT_URL => "192.168.88.202:8080/customer/$custId/goals",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
+}
+
+//Primary key f1817e51b3fb4d2ca3fc279d0df3a061
+//Auth-Provider-Name
+//01460900080600
+
+function getBOCAccount($accountid = 'a746637b91b19a261a67d8bd') {
+	//bankid bda8eb884efcef7082792d45
+	//accountid a746637b91b19a261a67d8bd
+	//viewid 5710bba5d42604e4072d1e92
+	//
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+		CURLOPT_HTTPHEADER => array(
+							    'Auth-Provider-Name: 01460900080600',
+							    'Auth-ID: 123456789',
+							    'Ocp-Apim-Subscription-Key: f1817e51b3fb4d2ca3fc279d0df3a061'
+							    ),
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "http://api.bocapi.net/v1/api/banks/bda8eb884efcef7082792d45/accounts/$accountid/5710bba5d42604e4072d1e92/account",
+	    // CURLOPT_URL => "192.168.88.202:8080/customer/$custId/goals",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
 }
