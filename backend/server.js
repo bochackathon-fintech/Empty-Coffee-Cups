@@ -258,8 +258,9 @@ function everyXseconds(seconds) {
 
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
-        getAccountValue('','','','');
-        return;
+        // does not work
+        // getAccountValue('','','','');
+
         cloudantDb.fetch({}, function(err, body) {
             var docs = body.rows.map(function(row) {
                 if (row.doc != null){
@@ -274,12 +275,13 @@ function everyXseconds(seconds) {
                 var bankuuid = doc.bankuuid;
                 var bankview = doc.bankview;
                 var bankid = doc.bankid;
-
-                var acctoday = 1;
+                var transactions = getTransactions();
 
                 goals = doc.goals;
 
                 if (goals == null) return;
+
+                var acctoday = getAmmountToSaveToday(transactions,0.001);
 
                 goals = updateGoals(goals,acctoday);
 
@@ -294,6 +296,9 @@ function everyXseconds(seconds) {
         return;
     }
 }
+
+//------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------
 
@@ -323,18 +328,33 @@ function updateGoals(goals,acctoday){
 
 //------------------------------------------------------------------------------
 
-
 eval(fs.readFileSync('example_trasnactions.js')+'');
-
+function getTransactions(){
+  return example_transactions;
+}
+//------------------------------------------------------------------------------
 
 function getAmmountToSaveToday(transactions,perc){
 
     perc = parseFloat(perc);
 
+    // hardcoded
+    //var date = new Date();
+    var datenow = ''
 
+    var ammount = 0;
+    for(var i = 0; i < transactions.length; i++) {
+      var obj = transactions[i];
+          if (obj.transaction<0) {
+              ammount += parseFloat(obj.transaction);
+          }
+    }
+
+    ammount = - ammount*perc;
+
+    return ammount;
 
 }
-
 
 //------------------------------------------------------------------------------
 

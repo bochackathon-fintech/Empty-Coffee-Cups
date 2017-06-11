@@ -611,5 +611,3 @@ example_transactions =  [
     "transaction": -7
   }
 ];
-
-
