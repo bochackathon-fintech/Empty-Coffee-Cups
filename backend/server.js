@@ -211,6 +211,8 @@ app.delete("/customer/:id/goals", function(req, res, next){
 
 
 
+// Mobile
+
 app.get("/customer/:id/catmob", function(req, res, next){
 	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
    var ret = [
@@ -231,7 +233,14 @@ app.get("/customer/:id/stats", function(req, res, next){
     res.json(ret);
 });
 
+// Profitability AMEX
 
+app.get("/customer/:id/amexprofitability", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+  var transactions = getTransactions();
+  var resamex = checkForAmex(transactions);
+  res.json(resamex);
+});
 
 
 //------------------------------------------------------------------------------
@@ -354,6 +363,43 @@ function getAmmountToSaveToday(transactions,perc){
 
     return ammount;
 
+}
+
+function checkForAmex(transactions){
+
+    // Must go back to year  or divide by months
+    // in our case we have information only for 4 months
+    // we have to multiply by 3. In practice we have to calculate
+    // the defference between first and last date.
+
+    var date1 = moment(transactions[0].Date, "DD.MM.YYYY HH.mm").toDate();
+    var date2 = moment(transactions[transactions.length-1].Date, "DD.MM.YYYY HH.mm").toDate();
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    var ammount = 0;
+    var total_ammount = 0;
+
+    for(var i = 0; i < transactions.length; i++) {
+      var obj = transactions[i];
+          if (obj.transaction<0) {
+              if (obj.comments == 'Alphamega Supermarket'){
+                ammount += parseFloat(obj.transaction);
+              }else{
+                total_ammount += parseFloat(obj.transaction);
+              }
+
+          }
+    }
+
+    var year_total_all = - (total_ammount/diffDays)*365;
+    var year_shop = - (ammount/diffDays)*365;
+
+
+    // This is static for Blue AMEX only
+    var result = year_total_all*0.004  + year_shop*0.02 - 25;
+
+    return result;
 }
 
 //------------------------------------------------------------------------------
