@@ -51,6 +51,7 @@ var cloudantDb = cloudant.db.use("clients");
 app.use("/swagger/api", express.static("./public/swagger.yaml"));
 app.use("/explorer", express.static("./public/swagger-ui"));
 
+// Basic NoSql API
 
 app.get("/customers", function(req, res, next){
 	var responseData    = [];
@@ -210,7 +211,6 @@ app.delete("/customer/:id/goals", function(req, res, next){
 });
 
 
-
 // Mobile
 
 app.get("/customer/:id/catmob", function(req, res, next){
@@ -243,6 +243,13 @@ app.get("/customer/:id/amexprofitability", function(req, res, next){
 });
 
 
+app.get("/customer/:id/schedulingprofitability", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+  var transactions = getTransactions();
+  var resamex = getRangeForSaving(transactions);
+  res.json(resamex);
+});
+
 //------------------------------------------------------------------------------
 
 // Starting the server
@@ -259,13 +266,16 @@ app.listen(port, function () {
 // set up cron jobs
 console.log("setting up cron jobs");
 
-new CronJob("*/3 * * * * *", everyXseconds(3), null, true);
+new CronJob("*/10 * * * * *", everyXseconds(10), null, true);
+
+
 
 //------------------------------------------------------------------------------
 function everyXseconds(seconds) {
     return function() {
 
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
+
 
         // does not work
         // getAccountValue('','','','');
@@ -305,9 +315,6 @@ function everyXseconds(seconds) {
         return;
     }
 }
-
-//------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 
@@ -430,4 +437,53 @@ function getAccountValue(bankid,accountid,viewid,authid){
 
 
 
+}
+
+
+function getRangeForSaving(transactions){
+
+
+
+    var date1 = moment(transactions[0].Date, "DD.MM.YYYY HH.mm").toDate();
+    var date2 = moment(transactions[transactions.length-1].Date, "DD.MM.YYYY HH.mm").toDate();
+
+    var histogramExp = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00];
+    var histogramIncome = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    var diffMonths = Math.ceil(timeDiff / (1000 * 3600 * 24 * 30));
+
+
+    var expenses = 0;
+    var income = 0;
+    var ammount = 0;
+
+
+    for(var i = 0; i < transactions.length; i++) {
+      var obj = transactions[i];
+      var date = moment(obj.Date, "DD.MM.YYYY HH.mm").date();
+          if (obj.transaction<0) {
+              histogramExp[ date ]   += parseFloat(obj.transaction);
+              ammount += parseFloat(obj.transaction);
+
+          }else{
+            histogramIncome[ date ]   += parseFloat(obj.transaction);
+          }
+    }
+
+
+    var day_exp = - (ammount/diffDays);
+    var month_income =  1450;
+    var saved = 0;
+
+    var current = month_income;
+    for(var i = 0; i < 30; i++) {
+      saved += current*0.016/365; // interest is 1.6% in 180days e-notice
+      current = current - day_exp;
+    }
+
+
+    return saved*12;
 }
