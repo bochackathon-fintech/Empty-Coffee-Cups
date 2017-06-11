@@ -10,8 +10,6 @@ var moment = require('moment');
 var fs = require('fs');
 
 
-
-
 const plaidClient = new plaid.Client("59357581bdc6a401d71d8525",
                                      "d547b8b3b20443694b62b49534f7ac",
                                      "d6e21b64c3f3acad6465d5ed088295",
@@ -21,9 +19,6 @@ const plaidClient = new plaid.Client("59357581bdc6a401d71d8525",
                                              agent: 'Patient Agent'
                                      }
                                      );
-
-
-console.log(plaidClient);
 
 
 
@@ -39,13 +34,9 @@ var appEnv = cfenv.getAppEnv();
 const bocviewuuid = '5710bba5d42604e4072d1e92'
 const bocuuid = 'bda8eb884efcef7082792d45'
 const bocapikey = 'f62cecf9b2f248f3bb0059fad858949c'
-const bocurl = 'api.bocapi.net'
+const bocurl = 'http://api.bocapi.net'
 const bocurlpath = '/v1/api/'
-
-
-
-/// Static magic numbers for PLAID
-
+const bockey = "442c668542704b6a8e238ff08b17e157"
 
 
 
@@ -179,7 +170,6 @@ app.post("/customer/:id/goals", function(req, res, next){
 
     });
 
-
     res.json();
 });
 
@@ -220,6 +210,32 @@ app.delete("/customer/:id/goals", function(req, res, next){
 });
 
 
+
+app.get("/customer/:id/catmob", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+   var ret = [
+     {"name": "Income", "value":  1200},
+     {"name": "Income", "value":  5000},
+     {"name": "Income", "value":  9000}
+     ];
+    res.json(ret);
+});
+
+app.get("/customer/:id/stats", function(req, res, next){
+	var idn = req.query._id || req.query.id || req.body._id || req.body.id || req.params;
+   var ret = [
+       {"name": "Income", "value":  1200},
+       {"name": "Income", "value":  5000},
+       {"name": "Income", "value":  9000}
+     ];
+    res.json(ret);
+});
+
+
+
+
+//------------------------------------------------------------------------------
+
 // Starting the server
 const port = 'PORT' in process.env ? process.env.PORT : 8080;
 app.listen(port, function () {
@@ -234,14 +250,15 @@ app.listen(port, function () {
 // set up cron jobs
 console.log("setting up cron jobs");
 
-new CronJob("*/5 * * * * *", everyXseconds(5), null, true);
+new CronJob("*/3 * * * * *", everyXseconds(3), null, true);
 
 //------------------------------------------------------------------------------
 function everyXseconds(seconds) {
     return function() {
+
         console.log(new Date() + ": another " + seconds + " seconds have passed!");
 
-        //getAccountValue('','','','');
+        getAccountValue('','','','');
         return;
         cloudantDb.fetch({}, function(err, body) {
             var docs = body.rows.map(function(row) {
@@ -258,7 +275,7 @@ function everyXseconds(seconds) {
                 var bankview = doc.bankview;
                 var bankid = doc.bankid;
 
-                var acctoday = 2120;
+                var acctoday = 1;
 
                 goals = doc.goals;
 
@@ -324,43 +341,26 @@ function getAmmountToSaveToday(transactions,perc){
 
 function getAccountValue(bankid,accountid,viewid,authid){
 
-    var body = JSON.stringify({
-        BANK_ID : bocuuid,
-        ACCOUNT_ID : 'a746637b91b19a261a67d8bd',
-        VIEW_ID : bocviewuuid
+    // FIXME: does not work!
+    return null;
+
+    var propertiesObject = JSON.stringify({
+        'Auth-Provider-Name' : '01460900080600',
+        'Auth-ID' : '123456789'
     });
 
-    var vpath = bocurlpath + "banks/" + bocuuid + "/accounts/a746637b91b19a261a67d8bd/5710bba5d42604e4072d" +"/account"
-    var request = new http.ClientRequest({
-        hostname: bocurl,
-        port: 80,
-        path: vpath,
-        method: "GET",
-        headers: {
-            "Auth-Provider-Name":"01460900080600",
-            "Auth-ID":"123456789",
-            "Ocp-Apim-Subscription-Key":"f62cecf9b2f248f3bb0059fad858949c",
-            "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength(body)
-        }
-    },
-    function(res) {
+    var murl = bocurl + bocurlpath + "banks/" + bocuuid
+          + "/accounts/a746637b91b19a261a67d8bd/5710bba5d42604e4072d1e92"
+          + "/account/?subscription-key=" + bockey;
 
-        res.setEncoding('utf8');
-        res.on('data', function (data) {
-            console.log("data:"+ data);
-        });
-        res.on('end', function (data) {
-            console.log("end: " + data);
-        });
-        res.on('error', function(data) {
-              console.log('problem with request: ' + data);
-        });
-    }
+    console.log(murl);
+    var request = require('request');
+    //var propertiesObject = { field1:'test1', field2:'test2' };
 
-
-    );
-
+    request({url:murl, qs:propertiesObject}, function(err, response, body) {
+      if(err) { console.log(err); return; }
+      console.log(response.body);
+    });
 
 
 
