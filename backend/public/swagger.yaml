@@ -45,8 +45,6 @@ paths:
         200:
           $ref: '#/responses/getOneCustomer'
 
-
-
     delete:
       tags:
         - customers
@@ -103,6 +101,43 @@ paths:
         200:
           $ref: '#/responses/getGoalsCustomer'
 
+
+  /customer/{id}/stats:
+    get:
+      tags:
+        - statistics
+      operationId: get
+      description: Get statistics using customer ID
+      parameters:
+        - $ref: '#/parameters/idParam'
+      responses:
+        200:
+          "JSON of statistics."
+
+
+  /customer/{id}/amexprofitability:
+    get:
+      tags:
+        - Profitability
+      operationId: get
+      description: Get the value of profitability of Blue AMEX using customer ID
+      parameters:
+        - $ref: '#/parameters/idParam'
+      responses:
+        200:
+          "A positive or negative value depending on profitability."
+
+  /customer/{id}/schedulingprofitability:
+    get:
+      tags:
+        - Profitability
+      operationId: get
+      description: Get the value of profitability of Blue AMEX using customer ID
+      parameters:
+        - $ref: '#/parameters/idParam'
+      responses:
+        200:
+          "A positive or negative value depending on profitability."
 
 
 definitions:
