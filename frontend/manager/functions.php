@@ -212,6 +212,23 @@ function getTransactions() {
 	$resp_decode = json_decode($resp);
 	return $resp_decode;
 }
+function getScheduledProfitability() {
+	// Get cURL resource
+	$curl = curl_init();
+	// Set some options - we are passing in a useragent too here
+	curl_setopt_array($curl, array(
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL => "https://hackathon-be.mybluemix.net/customer/304fd2e19f1c14fe3345cca788e4e83d/schedulingprofitability",
+	    CURLOPT_USERAGENT => 'BankBase BOC Hackathon Request'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	$resp_decode = json_decode($resp);
+	return $resp_decode;
+}
 //Todo:
 function getAccounts() {
 	//accId  bda8eb884efcea209b2a6240

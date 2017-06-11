@@ -1,9 +1,5 @@
 Frontend "CMS"
 
-### Table of Contents
-* [Summary](#summary)
-* [Requirements & Configuration](#Requirements & Configuration)
-
 ### Summary
 
 A simple layout to manage your content. 
