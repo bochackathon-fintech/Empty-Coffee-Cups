@@ -1,5 +1,28 @@
 $(document).ready(function () {
 
+    $(".maximize").click(function(event) {
+        event.stopPropagation();
+        $(".watsonChatbot").addClass("full-screen");
+    });
+    $(".minimize").click(function(event) {
+        event.stopPropagation();
+        $(".watsonChatbot").removeClass("full-screen");
+        $(".watsonChatbot").removeClass("amUp");
+        $(".watsonChatbot").css("bottom", -436);
+    });
+
+    $(".expand-warnings-dropdown").click(function() {
+        if($(".warnings-dropdown-wrapper").hasClass('amhidden')) {
+            $(".warnings-dropdown-wrapper").removeClass('amhidden');
+            $(".warnings-dropdown-wrapper").slideDown();
+            $(this).html('<i class="fa fa-minus-square" aria-hidden="true"></i>');
+        } else {
+            $(".warnings-dropdown-wrapper").slideUp();
+            $(".warnings-dropdown-wrapper").addClass('amhidden');
+            $(this).html('<i class="fa fa-plus-square" aria-hidden="true"></i>');
+        }
+    });
+
     $(".sortby.priority").click(function() {
         console.log('priority');
         tinysort('.customer-goals-list > .goal-group-details',{data:'sortp'});
@@ -118,7 +141,7 @@ $(document).ready(function () {
         });
     });
     
-    $(".top_menu").click(function() {
+    $(".pop-up-watson").click(function() {
         if($(".watsonChatbot").hasClass("amUp")) {
             $(".watsonChatbot").removeClass("amUp");
             $(".watsonChatbot").css("bottom", -436);

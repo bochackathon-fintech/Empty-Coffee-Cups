@@ -30,8 +30,19 @@
 			               			<div class="col-xs-12">
 					                	<h2>Budgets</h2>
 										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-												15%
+											<?php
+												//get goals percentage
+												$customerGoals = getGoals('304fd2e19f1c14fe3345cca788e4e83d')[0];
+												// print_r($customerGoals);
+												$overallPercentage = 0;
+												foreach ($customerGoals as $key => $goal) {
+													$overallPercentage += ($goal->saved/$goal->value);
+												}
+												$overallPercentage = $overallPercentage * 100;
+												$overallPercentage = number_format($overallPercentage, 2, '.', ',');
+											?>
+											<div class="progress-bar goal-progress-bar-dashboard" role="progressbar" aria-valuenow="<?php echo $overallPercentage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $overallPercentage; ?>%;">
+												<?php echo $overallPercentage . "%"; ?>
 											</div>
 										</div>
 									</div>
@@ -68,10 +79,13 @@
 					                	<h2>Activities</h2>
 					                	<div class="activities-alerts">
 						                	<div class="alert alert-info" role="alert">
-												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 7 Accounts need your attention
+												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 1 Account(s) need your attention <span class="expand-warnings-dropdown"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
+
 											</div>
-						                	<div class="alert alert-warning" role="alert">
-												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent 123123. Usually you spend 100
+											<div class="warnings-dropdown-wrapper amhidden">
+							                	<div class="alert alert-warning" role="alert">
+													<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent €864. Usually you spend around €500.
+												</div>
 											</div>
 										</div>
 					                </div>
@@ -79,11 +93,11 @@
 			                	<div class="row">
 					                <div class="col-xs-12 border-top">
 					                	<h2>Top Spending Categories</h2>
-					                	<div class="spendings-block"><i class="fa fa-suitcase" aria-hidden="true"></i></div>
-					                	<div class="spendings-block"><i class="fa fa-car" aria-hidden="true"></i></div>
-					                	<div class="spendings-block"><i class="fa fa-bolt" aria-hidden="true"></i></div>
-					                	<div class="spendings-block"><i class="fa fa-cutlery" aria-hidden="true"></i></div>
-					                	<div class="spendings-block"><i class="fa fa-shopping-bag" aria-hidden="true"></i></div>
+					                	<div class="spendings-block"><i class="fa fa-bolt" aria-hidden="true"></i> 4,147</div>
+					                	<div class="spendings-block"><i class="fa fa-car" aria-hidden="true"></i> 3,889</div>
+					                	<div class="spendings-block"><i class="fa fa-cutlery" aria-hidden="true"></i> 2,641</div>
+					                	<div class="spendings-block"><i class="fa fa-suitcase" aria-hidden="true"></i> 2,345</div>
+					                	<div class="spendings-block"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 871</div>
 					                </div>
 								</div>
 			                </div>
@@ -100,11 +114,12 @@
 			function drawDonutChart() {
 				var data = google.visualization.arrayToDataTable([
 					['Spending Categories', 'Amount'],
-					['Shopping',     11],
-					['Travel',      2],
-					['Commute',  2],
-					['Bills', 2],
-					['Other',    7]
+					['Other',     11],
+					['Travel',      4],
+					['Bills',  8],
+					['Household', 5],
+					['Commute', 6],
+					['Shopping',    3]
 				]);
 				var options = {
 					backgroundColor: '#fafafa',
@@ -114,7 +129,7 @@
 					height: 300,
 					//title: 'Spending Categories',
 					pieHole: 0.6,
-					colors:['#c00','blue','green','orange','magenta']
+					colors:['#c00','#20455a','#ccc','orange','#1b9e77', "green"]
 				};
 				var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
 
@@ -137,12 +152,12 @@
 
 			function drawBarChart() {
 				var data = google.visualization.arrayToDataTable([
-					['Month', 'Income', 'Expenses', 'Profit'],
-					['Jan', 1000, 400, 200],
-					['Feb', 1000, 400, 200],
-					['Mar', 1000, 400, 200],
-					['Apr', 1000, 400, 200],
-					['May', 1000, 400, 200]
+					['Month', 'Income', 'Expenses', 'Savings'],
+					['Jan', 1600, 1400, 100],
+					['Feb', 1600, 900, 250],
+					['Mar', 1600, 457, 350],
+					['Apr', 1600, 665, 300],
+					['May', 1600, 864, 280]
 				]);
 
 				var options = {

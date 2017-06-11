@@ -1,6 +1,7 @@
 body, html {
 	font-family: 'Open Sans';
-    background: #fafafa;
+  font-size: 18px;
+  background: #fafafa;
 }
 h1, h2, h3 {
 	font-family: 'Ubuntu';
@@ -333,10 +334,21 @@ html { height: 100%;}
     margin-top: 10px;
 }
 /* dashboard */
+.goal-progress-bar-dashboard {
+  min-width: 11%;
+}
+.expand-warnings-dropdown {
+  float: right;
+  cursor: pointer;
+}
+.warnings-dropdown-wrapper {
+  display: none;
+}
 .spendings-block {
-    display: inline;
+    display: inline-block;
     font-size: 24px;
     padding: 0 5px;
+    width: calc(50% - 10px);
 }
 .activities-alerts .alert {
 	margin-bottom: 10px;
@@ -419,6 +431,14 @@ span.span-inner-val {
     z-index: 1111111;
     width: 420px;
     height: 500px;
+}
+.watsonChatbot.full-screen {
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 80%;
 }
 .top_menu {
   cursor: pointer;
