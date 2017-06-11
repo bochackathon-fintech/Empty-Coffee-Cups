@@ -79,7 +79,7 @@
 					                	<h2>Activities</h2>
 					                	<div class="activities-alerts">
 						                	<div class="alert alert-info" role="alert">
-												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 2 Issue(s) need your attention <span class="expand-warnings-dropdown"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
+												<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> 3 Issue(s) need your attention <span class="expand-warnings-dropdown"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
 
 											</div>
 											<div class="warnings-dropdown-wrapper amhidden">
@@ -91,6 +91,15 @@
 														echo $savingsUsingAMEX;
 													?>
 													in the next year.
+												</div>
+							                	<div class="alert alert-warning" role="alert">
+													<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> Profitability from smart scheduling during the month, assuming 1.6% interest rate, will be €
+													<?php
+														$savingsUsingAMEX = getScheduledProfitability();
+														$savingsUsingAMEX = number_format($savingsUsingAMEX, 2, '.', ',');
+														echo $savingsUsingAMEX;
+													?>
+													in one year.
 												</div>
 							                	<div class="alert alert-warning" role="alert">
 													<strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning!</strong> In the past 30 days you spent €864. Usually you spend around €500.
