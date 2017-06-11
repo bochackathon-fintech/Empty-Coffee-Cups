@@ -12,17 +12,18 @@ var fs = require('fs');
 
 
 
-const plaidClient = new plaid.Client("59357581bdc6a401d71d8525", 
-                                     "d547b8b3b20443694b62b49534f7ac", 
-                                     "d6e21b64c3f3acad6465d5ed088295", 
-                                     plaid.environments.sandbox, 
+const plaidClient = new plaid.Client("59357581bdc6a401d71d8525",
+                                     "d547b8b3b20443694b62b49534f7ac",
+                                     "d6e21b64c3f3acad6465d5ed088295",
+                                     plaid.environments.sandbox,
                                      {
-                                           timeout: 10 * 60 * 1000, // 30 minutes 
+                                           timeout: 10 * 60 * 1000, // 30 minutes
                                              agent: 'Patient Agent'
                                      }
                                      );
 
 
+console.log(plaidClient);
 
 
 
@@ -196,7 +197,9 @@ app.delete("/customer/:id/goals", function(req, res, next){
         var saved = 0;
         doc.goals  = doc.goals.filter(function(el) {
             if (el.name == req.query.name){
-                saved = el.saved;
+                if (  parseFloat( req.query.value) != parseFloat( req.query.saved) ){
+                  saved = el.saved;
+                }
             }
             return el.name !== req.query.name;
         });
@@ -310,7 +313,7 @@ eval(fs.readFileSync('example_trasnactions.js')+'');
 function getAmmountToSaveToday(transactions,perc){
 
     perc = parseFloat(perc);
-    
+
 
 
 }
@@ -345,24 +348,20 @@ function getAccountValue(bankid,accountid,viewid,authid){
 
         res.setEncoding('utf8');
         res.on('data', function (data) {
-            console.log("data:"+ data); 
+            console.log("data:"+ data);
         });
         res.on('end', function (data) {
-            console.log("end: " + data); 
+            console.log("end: " + data);
         });
         res.on('error', function(data) {
               console.log('problem with request: ' + data);
         });
     }
 
-    
+
     );
 
 
 
 
 }
-
-
-
-
