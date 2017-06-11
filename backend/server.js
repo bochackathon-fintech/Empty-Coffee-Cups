@@ -7,6 +7,8 @@ const Cloudant = require('cloudant');
 var http = require('http')
 const plaid = require('plaid');
 var moment = require('moment');
+var fs = require('fs');
+
 
 
 
@@ -298,6 +300,21 @@ function updateGoals(goals,acctoday){
     }
     return goals;
 }
+
+//------------------------------------------------------------------------------
+
+
+eval(fs.readFileSync('example_trasnactions.js')+'');
+
+
+function getAmmountToSaveToday(transactions,perc){
+
+    perc = parseFloat(perc);
+    
+
+
+}
+
 
 //------------------------------------------------------------------------------
 
