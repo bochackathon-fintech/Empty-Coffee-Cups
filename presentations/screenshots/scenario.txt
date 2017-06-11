@@ -1,0 +1,8 @@
+Dashboard:
+- the user can keep track of some basic information and get some important warnings and tips.
+
+Goal Setting:
+- a user can set a goal, with a value date, an amount and a type. It automatically adds money to the apropriate savings account.
+
+Watson:
+- a chatbot to assist the user. You can ask him to save money, transfer money, check your balance and set a new goal.
